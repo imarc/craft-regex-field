@@ -1,0 +1,8 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+        id: name~'regexField',
+        name: name~'[regexField]',
+        value: value ? value.regexField : '',
+        placeholder: field['placeholderText'] })
+}}

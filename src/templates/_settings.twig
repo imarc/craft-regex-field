@@ -1,0 +1,22 @@
+{# @var plugin \imarc\regexfield\RegexField #}
+{# @var settings \imarc\regexfield\models\Settings #}
+
+{% import '_includes/forms.twig' as forms %}
+
+{% do view.registerAssetBundle("imarc\\regexfield\\assetbundles\\regexfieldsettings\\RegexFieldSettingsAsset") %}
+
+{{ forms.textField({
+    label: 'Regex Pattern',
+    instructions: 'Enter a regular expression to test field input against',
+    id: 'pattern',
+    name: 'pattern',
+    value: field['pattern']})
+}}
+
+{{ forms.textField({
+    label: 'Placeholder text',
+    instructions: 'Enter placeholder text for the form field',
+    id: 'placeholderText',
+    name: 'placeholderText',
+    value: field['placeholderText']})
+}}
