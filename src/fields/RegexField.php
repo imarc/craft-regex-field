@@ -143,7 +143,7 @@ class RegexField extends Field implements PreviewableFieldInterface
     {
 
         Craft::info('RegexField::validateRegularExpression',"In method");
-        $value = $element->getFieldValue($this->handle)->regexField;
+        $value = $element->getFieldValue($this->handle)->value;
 
         Craft::info('RegexField::validateRegularExpression',"Value: $value");
 
