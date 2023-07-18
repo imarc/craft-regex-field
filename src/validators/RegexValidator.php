@@ -30,18 +30,18 @@ class RegexValidator extends Validator
         $field = $this->field;
         Craft::info('RegexFieldValidator::validateRegularExpression', "In method");
 
-        Craft::info('RegexFieldValidator::validateRegularExpression', "Value: $value->regexField");
+        Craft::info('RegexFieldValidator::validateRegularExpression', "Value: " . json_encode($value));
 
         $customPattern = $field->pattern;
         $customPattern = '`'.$customPattern.'`';
 
         Craft::info('RegexFieldValidator::validateRegularExpression', "Pattern: $customPattern");
 
-        Craft::info('RegexFieldValidator::validateRegularExpression', "Pregmatch: " . preg_match($customPattern, $value->regexField));
+        Craft::info('RegexFieldValidator::validateRegularExpression', "Pregmatch: " . preg_match($customPattern, $value));
 
 
         if (!empty($customPattern)) {
-            if (!preg_match($customPattern, $value->regexField)) {
+            if (!preg_match($customPattern, $value)) {
                 return ["Value must match " . $customPattern, []];
             }
         }

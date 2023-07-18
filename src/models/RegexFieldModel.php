@@ -19,6 +19,9 @@ class RegexFieldModel extends Model
 
     public function __construct($config = [])
     {
+        if (is_array($config) && isset($config['regexField'])) {
+            $this->regexField = $config['regexField'];
+        }
         parent::__construct($config);
     }
 

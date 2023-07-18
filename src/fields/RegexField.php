@@ -72,29 +72,14 @@ class RegexField extends Field implements PreviewableFieldInterface
     public function normalizeValue($value, ElementInterface $element = null): mixed
     {
         if ($value instanceof RegexFieldModel) {
-            return $value;
+            return $value->regexField;
+        } else if (is_array($value) && isset($value['regexField'])) {
+            return $value["regexField"];
+        } else if ($value && !is_string($value) && $value->regexField) {
+            return $value->regexField;
         }
 
-        $attr = [];
-        if (is_string($value)) {
-            // If value is a string we are loading the data from the database
-            try {
-                $decodedValue = Json::decode($value, true);
-                if (is_array($decodedValue)) {
-                  $attr += $decodedValue;
-                }
-              } catch (Exception) {}
-        } else if (is_array($value) && isset($value['isCpFormData'])) {
-            // If it is an array and the field `isCpFormData` is set, we are saving a cp form
-            $attr += [
-                'pattern' => $this->pattern && isset($value['pattern']) ? $value['pattern'] : null,
-            ];
-        } else if (is_array($value)) {
-            // Finally, if it is an array it is a serialized value
-            $attr += $value;
-        }
-
-        return new RegexFieldModel($attr);
+        return $value;
     }
 
     public function serializeValue($value, ElementInterface $element = null): mixed
@@ -130,54 +115,6 @@ class RegexField extends Field implements PreviewableFieldInterface
         return $rules;
     }
 
-    /**
-     * Validates our fields submitted value beyond the checks
-     * that were assumed based on the content attribute.
-     *
-     *
-     * @param Element|ElementInterface $element
-     *
-     * @return void
-     */
-    public function validateRegularExpression(ElementInterface $element)
-    {
-
-        Craft::info('RegexField::validateRegularExpression',"In method");
-        $value = $element->getFieldValue($this->handle)->value;
-
-        Craft::info('RegexField::validateRegularExpression',"Value: $value");
-
-        $customPattern = $this->pattern;
-        $customPattern = '`'.$customPattern.'`';
-
-        Craft::info('RegexField::validateRegularExpression',"Pattern: $customPattern");
-
-        Craft::info('RegexField::validateRegularExpression',"Pregmatch: " . preg_match($customPattern, $value));
-
-        if (!empty($customPattern)) {
-            // Use backtick as delimiters
-            //$customPattern = '`'.$customPattern.'`';
-
-            if (!preg_match($customPattern, $value)) {
-
-                $this->addError($this->handle, "Value must match $customPattern.");
-                Craft::info('RegexField::validateRegularExpression', json_encode($this->getErrors()));
-                return false;
-            }
-        }
-
-        return true;
-
-    }
-
-    public function getErrorMessage($field): string
-    {
-        if ($field->customPattern && $field->customPatternErrorMessage) {
-            return Craft::t('sprout-base-fields', $field->customPatternErrorMessage);
-        }
-
-        return Craft::t('sprout-base-fields', $field->name.' must be a valid pattern.');
-    }
 
     /**
      * Returns the field’s input HTML.
@@ -209,9 +146,6 @@ class RegexField extends Field implements PreviewableFieldInterface
             ];
         $jsonVars = Json::encode($jsonVars);
         Craft::$app->getView()->registerJs("$('#{$namespacedId}-field').RegexFieldElement(" . $jsonVars . ");");
-
-        // Add redactor field
-        $config = ['handle' => $this->handle . '[thankyouMessage]'];
 
         // Render the input template
         return Craft::$app->getView()->renderTemplate(
