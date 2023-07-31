@@ -51,13 +51,13 @@ class RegexField extends Plugin
         return Craft::createObject(Settings::class);
     }
 
-    protected function settingsHtml(): ?string
+    /*protected function settingsHtml(): ?string
     {
         return Craft::$app->view->renderTemplate('regex-field/_settings.twig', [
             'plugin' => $this,
             'settings' => $this->getSettings(),
         ]);
-    }
+    } */
 
     private function attachEventHandlers(): void
     {
