@@ -92,7 +92,7 @@ class RegexField extends Field implements PreviewableFieldInterface
      *
      * @return string|null
      */
-    public function getSettingsHtml(): ?string
+    /*public function getSettingsHtml(): ?string
     {
         // Render the settings template
         return Craft::$app->getView()->renderTemplate(
@@ -102,7 +102,7 @@ class RegexField extends Field implements PreviewableFieldInterface
                 'settings' => $this->getSettings()
             ]
         );
-    }
+    } */
 
     /**
      * @inheritdoc
