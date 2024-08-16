@@ -29,8 +29,7 @@ class RegexValidator extends Validator
     {
         $field = $this->field;
 
-        $customPattern = $field->pattern;
-        $customPattern = '`'.$customPattern.'`';
+        $customPattern = '`'.$field->pattern.'`';
 
         if (!empty($customPattern)) {
             if (!preg_match($customPattern, $value)) {
