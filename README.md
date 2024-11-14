@@ -28,3 +28,13 @@ composer require imarc/craft-regex-field
 # tell Craft to install the plugin
 ./craft plugin/install regex-field
 ```
+
+## Usage
+
+Create a new field and choose "Regex" as the field type.
+
+<img width="322" alt="Screenshot 2024-11-11 at 12 10 08" src="https://github.com/user-attachments/assets/cce3b75e-bbf2-4542-8b9e-e1b1511e7c32">
+
+Enter a regex pattern that all input in the field will be validated against.
+
+<img width="1140" alt="Screenshot 2024-11-14 at 12 55 07" src="https://github.com/user-attachments/assets/45efd151-2b91-46ff-8a3c-d06c1e45a2bc">
