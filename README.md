@@ -1,6 +1,6 @@
 # Regex Field
 
-A field that validates inputs against a regex
+A CraftCMS field that validates inputs against a regex
 
 ## Requirements
 
